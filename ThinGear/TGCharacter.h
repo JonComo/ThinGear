@@ -1,14 +1,13 @@
 //
-//  TGViewController.h
+//  TGCharacter.h
 //  ThinGear
 //
-
+//  Created by Jon Como on 2/12/14.
 //  Copyright (c) 2014 Jon Como. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
 #import <SpriteKit/SpriteKit.h>
 
-@interface TGViewController : UIViewController
+@interface TGCharacter : SKSpriteNode
 
 @end
