@@ -16,10 +16,11 @@
 
 +(TGButton *)buttonWithActionBlock:(TGActionBlock)block
 {
-    TGButton *button = [[TGButton alloc] initWithColor:[UIColor greenColor] size:CGSizeMake(60, 60)];
+    TGButton *button = [[TGButton alloc] initWithColor:[UIColor greenColor] size:CGSizeMake(90, 90)];
     
     button.userInteractionEnabled = YES;
     button.actionBlock = block;
+    button.alpha = 0.3;
     
     return button;
 }
@@ -29,7 +30,7 @@
     if (self.actionBlock) self.actionBlock(YES, NO, shouldDoubleTap);
     
     shouldDoubleTap = YES;
-    timerDoubleTap = [NSTimer scheduledTimerWithTimeInterval:0.2 target:self selector:@selector(resetDoubleTapCheck) userInfo:nil repeats:NO];
+    timerDoubleTap = [NSTimer scheduledTimerWithTimeInterval:0.3 target:self selector:@selector(resetDoubleTapCheck) userInfo:nil repeats:NO];
 }
 
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event

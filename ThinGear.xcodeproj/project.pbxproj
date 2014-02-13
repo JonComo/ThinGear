@@ -18,7 +18,6 @@
 		868A1AB918AB62ED003A16BA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 868A1AB818AB62ED003A16BA /* main.m */; };
 		868A1ABD18AB62ED003A16BA /* TGAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 868A1ABC18AB62ED003A16BA /* TGAppDelegate.m */; };
 		868A1AC018AB62ED003A16BA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 868A1ABE18AB62ED003A16BA /* Main.storyboard */; };
-		868A1AC618AB62ED003A16BA /* TGMyScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 868A1AC518AB62ED003A16BA /* TGMyScene.m */; };
 		868A1ACA18AB62ED003A16BA /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 868A1AC918AB62ED003A16BA /* Images.xcassets */; };
 		868A1AD118AB62ED003A16BA /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 868A1AD018AB62ED003A16BA /* XCTest.framework */; };
 		868A1AD218AB62ED003A16BA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 868A1AAA18AB62ED003A16BA /* Foundation.framework */; };
@@ -26,6 +25,8 @@
 		868A1ADB18AB62ED003A16BA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 868A1AD918AB62ED003A16BA /* InfoPlist.strings */; };
 		868A1ADD18AB62ED003A16BA /* ThinGearTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 868A1ADC18AB62ED003A16BA /* ThinGearTests.m */; };
 		868A1AE818AB633D003A16BA /* TGDuelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 868A1AE718AB633D003A16BA /* TGDuelViewController.m */; };
+		86AA425C18ACA4C900DFB268 /* player.png in Resources */ = {isa = PBXBuildFile; fileRef = 86AA425A18ACA4C900DFB268 /* player.png */; };
+		86AA425F18ACA75200DFB268 /* playerRoll.png in Resources */ = {isa = PBXBuildFile; fileRef = 86AA425E18ACA75200DFB268 /* playerRoll.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,8 +58,6 @@
 		868A1ABB18AB62ED003A16BA /* TGAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TGAppDelegate.h; sourceTree = "<group>"; };
 		868A1ABC18AB62ED003A16BA /* TGAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TGAppDelegate.m; sourceTree = "<group>"; };
 		868A1ABF18AB62ED003A16BA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		868A1AC418AB62ED003A16BA /* TGMyScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TGMyScene.h; sourceTree = "<group>"; };
-		868A1AC518AB62ED003A16BA /* TGMyScene.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TGMyScene.m; sourceTree = "<group>"; };
 		868A1AC918AB62ED003A16BA /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		868A1ACF18AB62ED003A16BA /* ThinGearTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ThinGearTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		868A1AD018AB62ED003A16BA /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -67,6 +66,8 @@
 		868A1ADC18AB62ED003A16BA /* ThinGearTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ThinGearTests.m; sourceTree = "<group>"; };
 		868A1AE618AB633D003A16BA /* TGDuelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGDuelViewController.h; sourceTree = "<group>"; };
 		868A1AE718AB633D003A16BA /* TGDuelViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGDuelViewController.m; sourceTree = "<group>"; };
+		86AA425A18ACA4C900DFB268 /* player.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = player.png; sourceTree = "<group>"; };
+		86AA425E18ACA75200DFB268 /* playerRoll.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = playerRoll.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,11 +129,10 @@
 		868A1AB218AB62ED003A16BA /* ThinGear */ = {
 			isa = PBXGroup;
 			children = (
+				86AA425918ACA4C900DFB268 /* media */,
 				868A1ABB18AB62ED003A16BA /* TGAppDelegate.h */,
 				868A1ABC18AB62ED003A16BA /* TGAppDelegate.m */,
 				868A1ABE18AB62ED003A16BA /* Main.storyboard */,
-				868A1AC418AB62ED003A16BA /* TGMyScene.h */,
-				868A1AC518AB62ED003A16BA /* TGMyScene.m */,
 				868A1AE618AB633D003A16BA /* TGDuelViewController.h */,
 				868A1AE718AB633D003A16BA /* TGDuelViewController.m */,
 				86338E7318AB641200ADEF08 /* TGDuelScene.h */,
@@ -174,6 +174,15 @@
 				868A1AD918AB62ED003A16BA /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		86AA425918ACA4C900DFB268 /* media */ = {
+			isa = PBXGroup;
+			children = (
+				86AA425E18ACA75200DFB268 /* playerRoll.png */,
+				86AA425A18ACA4C900DFB268 /* player.png */,
+			);
+			path = media;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -255,6 +264,8 @@
 			files = (
 				868A1AB718AB62ED003A16BA /* InfoPlist.strings in Resources */,
 				868A1ACA18AB62ED003A16BA /* Images.xcassets in Resources */,
+				86AA425C18ACA4C900DFB268 /* player.png in Resources */,
+				86AA425F18ACA75200DFB268 /* playerRoll.png in Resources */,
 				868A1AC018AB62ED003A16BA /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -274,7 +285,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				868A1AC618AB62ED003A16BA /* TGMyScene.m in Sources */,
 				868A1AE818AB633D003A16BA /* TGDuelViewController.m in Sources */,
 				86338E7818AB650700ADEF08 /* TGButton.m in Sources */,
 				86338E7B18AB68F400ADEF08 /* TGCharacter.m in Sources */,
