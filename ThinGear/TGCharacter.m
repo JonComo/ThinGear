@@ -11,14 +11,20 @@
 @implementation TGCharacter
 {
     BOOL isDodging;
+    SKSpriteNode *sword;
+    CGPoint swordPosition;
+    float swordRotation;
 }
 
--(id)initWithTexturePrefix:(NSString *)texPrefix
+-(id)initWithPosition:(CGPoint)position texturePrefix:(NSString *)texPrefix scene:(SKScene *)scene
 {
     SKTexture *texture = [SKTexture textureWithImageNamed:texPrefix]; //idle
     
     if (self = [super initWithColor:[UIColor clearColor] size:texture.size]) {
         //init
+        [scene addChild:self];
+        self.position = position;
+        
         _texturePrefix = texPrefix;
         _graphics = [[SKSpriteNode alloc] initWithTexture:texture];
         [self addChild:_graphics];
@@ -30,6 +36,32 @@
         self.physicsBody.mass = 0.1;
         self.physicsBody.friction = 0.4;
         self.physicsBody.allowsRotation = NO;
+        self.physicsBody.categoryBitMask = TGColliderTypeCharacter;
+        self.physicsBody.collisionBitMask = TGColliderTypeGround | TGColliderTypeCharacter | TGColliderTypeWeapon;
+        
+        sword = [[SKSpriteNode alloc] initWithColor:[UIColor blackColor] size:CGSizeMake(8, 100)];
+        sword.position = CGPointMake(position.x, position.y + self.size.height/2);
+        sword.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:sword.size];
+        sword.physicsBody.mass = 0.1;
+        sword.physicsBody.categoryBitMask = TGColliderTypeWeapon;
+        sword.physicsBody.contactTestBitMask = TGColliderTypeCharacter;
+        [scene addChild:sword];
+        
+        swordRotation = M_PI_2;
+        
+        /*
+        swordMagnet = [[SKSpriteNode alloc] initWithColor:[UIColor redColor] size:CGSizeMake(4, 4)];
+        swordMagnet.position = CGPointMake(sword.position.x, sword.position.y + sword.size.height);
+        swordMagnet.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:swordMagnet.size];
+        swordMagnet.physicsBody.mass = .3;
+        [scene addChild:swordMagnet]; */
+        
+        SKPhysicsJointLimit *limit = [SKPhysicsJointLimit jointWithBodyA:self.physicsBody bodyB:sword.physicsBody anchorA:CGPointMake(sword.position.x, sword.position.y - sword.size.height/2) anchorB:self.position];
+        limit.maxLength = 200;
+        [scene.physicsWorld addJoint:limit];
+        /*
+        SKPhysicsJointSpring *spring = [SKPhysicsJointSpring jointWithBodyA:sword.physicsBody bodyB:swordMagnet.physicsBody anchorA:CGPointMake(sword.position.x, sword.position.y + sword.size.height/2) anchorB:swordMagnet.position];
+        [scene.physicsWorld addJoint:spring]; */
     }
     
     return self;
@@ -56,6 +88,15 @@
         
         [self faceTarget];
     }
+}
+
+-(void)didSimulatePhysics
+{
+    sword.zRotation = swordRotation;
+    sword.position = CGPointMake(self.position.x + (self.facing == TGDirectionRight ? 10 : -10), self.position.y);
+    
+    /*
+    swordMagnet.position = CGPointMake(self.position.x, self.position.y + 60); */
 }
 
 -(void)faceTarget
@@ -99,6 +140,20 @@
     }
     
     [self.graphics runAction:dodge];
+}
+
+-(void)attackWithType:(TGAttackType)type
+{
+    float angle = self.facing == TGDirectionRight ? -2 : 2;
+    
+    float initSwordRotation = swordRotation;
+    swordRotation = angle;
+    
+    [self runAction:[SKAction sequence:@[[SKAction waitForDuration:0.5], [SKAction runBlock:^{
+        swordRotation = initSwordRotation;
+    }]]]];
+    
+    //[sword.physicsBody applyAngularImpulse:type == TGAttackTypeWeak ? 0.01 : .05];
 }
 
 @end

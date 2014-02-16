@@ -16,7 +16,7 @@
 
 +(TGButton *)buttonWithActionBlock:(TGActionBlock)block
 {
-    TGButton *button = [[TGButton alloc] initWithColor:[UIColor greenColor] size:CGSizeMake(90, 90)];
+    TGButton *button = [[TGButton alloc] initWithColor:[UIColor greenColor] size:CGSizeMake(100, 100)];
     
     button.userInteractionEnabled = YES;
     button.actionBlock = block;
