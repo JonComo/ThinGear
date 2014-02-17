@@ -12,25 +12,23 @@ typedef enum
     TGDirectionLeft
 } TGDirection;
 
-typedef enum
-{
-    TGAttackTypeStrong,
-    TGAttackTypeWeak
-} TGAttackType;
-
 typedef enum : uint8_t {
     TGColliderTypeCharacter     = 1,
     TGColliderTypeGround        = 2,
     TGColliderTypeWeapon        = 4
 } TGColliderType;
 
-#import <SpriteKit/SpriteKit.h>
+#import "TGSprite.h"
+#import "TGEquip.h"
 
-@interface TGCharacter : SKSpriteNode
+@interface TGCharacter : TGSprite
 
 @property (nonatomic, strong) NSString *texturePrefix;
 @property (nonatomic, assign) TGDirection facing;
 @property (nonatomic, strong) SKSpriteNode *graphics;
+
+@property (nonatomic, strong) TGEquip *equipA;
+@property (nonatomic, strong) TGEquip *equipB;
 
 @property (nonatomic, weak) TGCharacter *target;
 
@@ -42,9 +40,5 @@ typedef enum : uint8_t {
 -(id)initWithPosition:(CGPoint)position texturePrefix:(NSString *)texPrefix scene:(SKScene *)scene;
 
 -(void)dodgeInDirection:(TGDirection)direction;
--(void)attackWithType:(TGAttackType)type;
-
--(void)update:(NSTimeInterval)currentTime;
--(void)didSimulatePhysics;
 
 @end

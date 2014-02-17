@@ -9,8 +9,10 @@
 #import "TGDuelScene.h"
 
 #import "TGButton.h"
-
 #import "TGCharacter.h"
+
+#import "TGWeapon.h"
+#import "TGShield.h"
 
 @interface TGDuelScene () <SKPhysicsContactDelegate>
 {
@@ -42,35 +44,20 @@
         ground.physicsBody.friction = 1;
         ground.physicsBody.categoryBitMask = TGColliderTypeGround;
         ground.physicsBody.collisionBitMask = TGColliderTypeWeapon;
+        ground.name = @"Ground";
         [self addChild:ground];
         
         player = [[TGCharacter alloc] initWithPosition:CGPointMake(size.width/2, 220) texturePrefix:@"player" scene:self];
-        //[self addChild:player];
+        player.equipA = [TGWeapon sword];
+        player.equipB = [TGShield shield];
         
+        TGCharacter *randChar = [[TGCharacter alloc] initWithPosition:CGPointMake(arc4random()%(int)size.width, 200) texturePrefix:@"player" scene:self];
         
-        for (int i = 0; i<2; i++) {
-            TGCharacter *randChar = [[TGCharacter alloc] initWithPosition:CGPointMake(arc4random()%(int)size.width, 200) texturePrefix:@"player" scene:self];
-            //[self addChild:randChar];
-            randChar.target = player;
-        }
+        randChar.equipA = [TGWeapon sword];
+        randChar.equipB = [TGShield shield];
         
-        /*
-        enemy = [[TGCharacter alloc] initWithTexturePrefix:@"player"];
-        enemy.position = CGPointMake(100, 300);
-        [self addChild:enemy];
-        
-        player.target = enemy;
-        enemy.target = player; */
-        
-        /*
-        SKSpriteNode *wheel = [[SKSpriteNode alloc] initWithColor:[UIColor orangeColor] size:CGSizeMake(40, 40)];
-        wheel.position = CGPointMake(player.position.x, player.position.y - player.size.height/2 + wheel.size.height*1/4);
-        wheel.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:wheel.size.width/2];
-        wheel.physicsBody.angularDamping = 0.8;
-        [self addChild:wheel];
-        
-        SKPhysicsJointPin *pin = [SKPhysicsJointPin jointWithBodyA:player.physicsBody bodyB:wheel.physicsBody anchor:wheel.position];
-        [self.physicsWorld addJoint:pin]; */
+        randChar.target = player;
+        player.target = randChar;
         
         float padding = 10;
         
@@ -90,11 +77,23 @@
         right.position = CGPointMake(left.position.x + right.size.width + padding, right.size.height/2 + padding);
         [self addChild:right];
         
-        TGButton *attack = [TGButton buttonWithActionBlock:^(BOOL wasPressed, BOOL wasReleased, BOOL wasDoubleTapped) {
-            [player attackWithType:(wasPressed && !wasDoubleTapped) ? TGAttackTypeWeak : TGAttackTypeStrong];
+        TGButton *triggerA = [TGButton buttonWithActionBlock:^(BOOL wasPressed, BOOL wasReleased, BOOL wasDoubleTapped) {
+            if (wasPressed)
+                [player.equipA triggerWithStrength:TGStrengthWeak];
+            if (wasReleased)
+                [player.equipA releaseTrigger];
         }];
-        attack.position = CGPointMake(size.width - (attack.size.width/2 + padding), attack.size.height/2 + padding);
-        [self addChild:attack];
+        triggerA.position = CGPointMake(size.width - (triggerA.size.width/2 + padding), triggerA.size.height/2 + padding);
+        [self addChild:triggerA];
+        
+        TGButton *triggerB = [TGButton buttonWithActionBlock:^(BOOL wasPressed, BOOL wasReleased, BOOL wasDoubleTapped) {
+            if (wasPressed)
+                [player.equipB triggerWithStrength:TGStrengthWeak];
+            if (wasReleased)
+                [player.equipB releaseTrigger];
+        }];
+        triggerB.position = CGPointMake(triggerA.position.x - triggerB.size.width - padding, triggerB.size.height/2 + padding);
+        [self addChild:triggerB];
     }
     
     return self;
@@ -107,7 +106,7 @@
         if ([node isKindOfClass:[TGCharacter class]]){
             [(TGCharacter *)node update:currentTime];
             
-            if (arc4random()%80==0 && node != player){
+            if (arc4random()%30==0 && node != player){
                 [(TGCharacter *)node dodgeInDirection:arc4random()%2 ? TGDirectionRight : TGDirectionLeft];
             }
         }
@@ -128,36 +127,26 @@
 
 -(void)didBeginContact:(SKPhysicsContact *)contact
 {
-    SKSpriteNode *spriteA = (SKSpriteNode *)contact.bodyA.node;
-    if ([spriteA isKindOfClass:[SKSpriteNode class]])
-    {
-    spriteA.colorBlendFactor = 1;
-    spriteA.color = [UIColor redColor];
-    }
+    TGSprite *spriteA = (TGSprite *)contact.bodyA.node;
+    TGSprite *spriteB = (TGSprite *)contact.bodyB.node;
     
-//    SKSpriteNode *spriteB = (SKSpriteNode *)contact.bodyB.node;
-//    if ([spriteB isKindOfClass:[SKSpriteNode class]])
-//    {
-//    spriteB.colorBlendFactor = 1;
-//    spriteB.color = [UIColor redColor];
-//    }
+    if ([spriteA isKindOfClass:[TGSprite class]])
+        [spriteA didBeginContact:contact withSprite:spriteB];
+    
+    if ([spriteB isKindOfClass:[TGSprite class]])
+        [spriteB didBeginContact:contact withSprite:spriteA];
 }
 
 -(void)didEndContact:(SKPhysicsContact *)contact
 {
-    SKSpriteNode *spriteA = (SKSpriteNode *)contact.bodyA.node;
-    if ([spriteA isKindOfClass:[SKSpriteNode class]])
-    {
-        spriteA.colorBlendFactor = 0;
-        spriteA.color = [UIColor blackColor];
-    }
+    TGSprite *spriteA = (TGSprite *)contact.bodyA.node;
+    TGSprite *spriteB = (TGSprite *)contact.bodyB.node;
     
-//    SKSpriteNode *spriteB = (SKSpriteNode *)contact.bodyB.node;
-//    if ([spriteB isKindOfClass:[SKSpriteNode class]])
-//    {
-//        spriteB.colorBlendFactor = 0;
-//        spriteB.color = [UIColor clearColor];
-//    }
+    if ([spriteA isKindOfClass:[TGSprite class]])
+        [spriteA didEndContact:contact];
+    
+    if ([spriteB isKindOfClass:[TGSprite class]])
+        [spriteB didEndContact:contact];
 }
 
 @end
