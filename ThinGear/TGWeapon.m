@@ -13,27 +13,23 @@
 #import "TGDepths.h"
 
 @implementation TGWeapon
+{
+    NSTimer *timerDoubleTap;
+    BOOL shouldDoubleTap;
+}
 
 +(TGWeapon *)sword
 {
     TGWeapon *sword = [[TGWeapon alloc] initWithTexture:[SKTexture textureWithImageNamed:@"sword.png"]];
     sword.name = @"Sword";
     sword.zPosition = TGDepthWeapon;
+    
     return sword;
 }
 
--(void)didSimulatePhysics
+-(void)resetDoubleTap
 {
-    if (!self.isTriggered){
-        if (self.character.facing == TGDirectionRight)
-        {
-            self.spriteAnimated.zRotation = 0.2;
-        }else{
-            self.spriteAnimated.zRotation = -0.2;
-        }
-    }
-    
-    [super didSimulatePhysics];
+    shouldDoubleTap = NO;
 }
 
 -(void)triggerWithStrength:(TGStrength)strength
@@ -41,29 +37,49 @@
     if (self.isTriggered) return;
     self.isTriggered = YES;
     
-    float offset = self.character.facing == TGDirectionRight ? 80 : -80;
+    SKAction *animation;
     
-    SKAction *windUp = [SKAction moveBy:CGVectorMake(-offset/3, 0) duration:0.2];
-    SKAction *swingOut = [SKAction moveBy:CGVectorMake(offset, 0) duration:0.15];
-    SKAction *reset = [SKAction moveTo:CGPointZero duration:0.2];
+    BOOL facingRight = self.character.facing == TGDirectionRight;
     
-    SKAction *animation = [SKAction sequence:@[windUp, [SKAction runBlock:^{ self.isCollidable = YES; }], swingOut, [SKAction runBlock:^{ self.isCollidable = NO; }], reset, [SKAction runBlock:^{ self.isTriggered = NO; }]]];
+    if (strength == TGStrengthWeak)
+    {
+        [self.spriteAnimated removeAllActions];
+        
+        float offset = facingRight ? 60 : -60;
+        
+        SKAction *windUp = [SKAction moveBy:CGVectorMake(-offset/3, 0) duration:0.1];
+        SKAction *swingOut = [SKAction moveBy:CGVectorMake(offset, 0) duration:0.15];
+        SKAction *reset = [SKAction moveTo:CGPointZero duration:0.2];
+        
+        animation = [SKAction sequence:@[windUp, [SKAction runBlock:^{ self.isCollidable = YES; }], swingOut, [SKAction runBlock:^{ self.isCollidable = NO; }], reset, [SKAction runBlock:^{ self.isTriggered = NO; }]]];
+    }else{
+        //Strong attack
+        [self.spriteAnimated removeAllActions];
+        
+        float angle = facingRight ? M_PI_2 : -M_PI_2;
+        
+        SKAction *rotate = [SKAction rotateToAngle:angle duration:0.6];
+        SKAction *swing = [SKAction rotateToAngle:0 duration:0.2];
+        SKAction *reset = [SKAction moveTo:CGPointZero duration:0.3];
+        
+        animation = [SKAction sequence:@[rotate, [SKAction runBlock:^{ self.isCollidable = YES; }], swing, [SKAction runBlock:^{ self.isCollidable = NO; }], reset, [SKAction runBlock:^{ self.isTriggered = NO; }]]];
+    }
     
     [self.spriteAnimated runAction:animation];
 }
 
--(void)didBeginContact:(SKPhysicsContact *)contact withSprite:(SKSpriteNode *)sprite
+-(void)didBeginContact:(SKPhysicsContact *)contact withSprite:(TGSprite *)sprite
 {
-    if (!self.isCollidable) return; //has to be swinging
+    if (!self.isCollidable) return;
     if (self.isResetting) return;
-    
     self.isResetting = YES;
     
     [self.spriteAnimated removeAllActions];
     
-    SKAction *resetSequence = [SKAction sequence:@[[TGAction bodyHitSound], [SKAction waitForDuration:0.2], [SKAction moveTo:CGPointZero duration:0.2], [SKAction runBlock:^{
+    self.isCollidable = NO;
+    
+    SKAction *resetSequence = [SKAction sequence:@[[SKAction waitForDuration:0.2], [SKAction group:@[[SKAction moveTo:CGPointZero duration:0.2], [SKAction rotateToAngle:0 duration:0.2]]], [SKAction runBlock:^{
         self.isResetting = NO;
-        self.isCollidable = NO;
         self.isTriggered = NO;
     }]]];
     

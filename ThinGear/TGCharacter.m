@@ -9,6 +9,7 @@
 #import "TGCharacter.h"
 
 #import "TGDepths.h"
+#import "TGAction.h"
 
 @implementation TGCharacter
 {
@@ -36,7 +37,9 @@
         self.physicsBody.friction = 0.4;
         self.physicsBody.allowsRotation = NO;
         self.physicsBody.categoryBitMask = TGColliderTypeCharacter;
-        self.physicsBody.collisionBitMask = TGColliderTypeGround | TGColliderTypeCharacter | TGColliderTypeWeapon;
+        self.physicsBody.collisionBitMask = TGColliderTypeGround | TGColliderTypeCharacter;
+        
+        self.name = @"Body";
         
         self.zPosition = TGDepthCharacter;
     }
@@ -48,7 +51,7 @@
 {
     _equipA = equipA;
     
-    equipA.centerOffset = CGPointMake(20, 0);
+    equipA.centerOffset = CGPointMake(10, 0);
     
     [self equipItem:equipA];
 }
@@ -64,10 +67,9 @@
 
 -(void)equipItem:(TGEquip *)item
 {
-    item.position = self.position;
+    [self.scene addChild:item];
     
     item.character = self;
-    [self.scene addChild:item];
     
     SKPhysicsJointLimit *limit = [SKPhysicsJointLimit jointWithBodyA:self.physicsBody bodyB:item.physicsBody anchorA:self.position anchorB:item.position];
     limit.maxLength = 200;
@@ -154,6 +156,16 @@
     }
     
     [self.graphics runAction:dodge];
+}
+
+-(void)didBeginContact:(SKPhysicsContact *)contact withSprite:(TGSprite *)sprite
+{
+    [self playCollisionSound];
+}
+
+-(void)playCollisionSound
+{
+    [self runAction:[TGAction bodyHitSound]];
 }
 
 @end

@@ -33,12 +33,27 @@
     self.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:self.size];
     self.physicsBody.mass = 0.1;
     self.physicsBody.categoryBitMask = TGColliderTypeWeapon;
-    self.physicsBody.contactTestBitMask = TGColliderTypeCharacter;
-    self.physicsBody.dynamic = NO;
+    self.isCollidable = NO;
     
     if (!self.spriteAnimated){
         self.spriteAnimated = [[SKSpriteNode alloc] initWithColor:[UIColor clearColor] size:CGSizeMake(4, 4)];
         [self addChild:self.spriteAnimated];
+    }
+}
+
+-(void)setIsCollidable:(BOOL)isCollidable
+{
+    _isCollidable = isCollidable;
+    
+    if (isCollidable)
+    {
+        self.physicsBody.categoryBitMask = TGColliderTypeWeapon;
+        self.physicsBody.collisionBitMask = TGColliderTypeWeapon | TGColliderTypeCharacter;
+        self.physicsBody.contactTestBitMask =  TGColliderTypeWeapon | TGColliderTypeCharacter;
+    }else{
+        self.physicsBody.categoryBitMask = TGColliderTypeNoCollide;
+        self.physicsBody.collisionBitMask = TGColliderTypeNone;
+        self.physicsBody.contactTestBitMask =  TGColliderTypeNone;
     }
 }
 
@@ -48,6 +63,8 @@
     
     self.position = CGPointMake(self.character.position.x + self.spriteAnimated.position.x + (faceRight ? self.centerOffset.x : -self.centerOffset.x), self.character.position.y + self.spriteAnimated.position.y + self.centerOffset.y);
     self.zRotation = self.spriteAnimated.zRotation;
+    
+    self.physicsBody.velocity = CGVectorMake(0, 0);
     
     self.graphics.xScale = faceRight ? 1 : -1;
 }
@@ -63,6 +80,11 @@
 }
 
 -(void)didBeginContact:(SKPhysicsContact *)contact withSprite:(SKSpriteNode *)sprite
+{
+    
+}
+
+-(void)playCollisionSound
 {
     
 }

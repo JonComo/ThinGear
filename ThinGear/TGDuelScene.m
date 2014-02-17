@@ -51,7 +51,7 @@
         player.equipA = [TGWeapon sword];
         player.equipB = [TGShield shield];
         
-        TGCharacter *randChar = [[TGCharacter alloc] initWithPosition:CGPointMake(arc4random()%(int)size.width, 200) texturePrefix:@"player" scene:self];
+        TGCharacter *randChar = [[TGCharacter alloc] initWithPosition:CGPointMake(100, 200) texturePrefix:@"player" scene:self];
         
         randChar.equipA = [TGWeapon sword];
         randChar.equipB = [TGShield shield];
@@ -78,8 +78,11 @@
         [self addChild:right];
         
         TGButton *triggerA = [TGButton buttonWithActionBlock:^(BOOL wasPressed, BOOL wasReleased, BOOL wasDoubleTapped) {
+            
             if (wasPressed)
                 [player.equipA triggerWithStrength:TGStrengthWeak];
+            if (wasDoubleTapped)
+                [player.equipA triggerWithStrength:TGStrengthStrong];
             if (wasReleased)
                 [player.equipA releaseTrigger];
         }];
@@ -103,11 +106,33 @@
 {
     for (SKSpriteNode *node in self.children)
     {
-        if ([node isKindOfClass:[TGCharacter class]]){
-            [(TGCharacter *)node update:currentTime];
+        if ([node isKindOfClass:[TGCharacter class]])
+        {
+            TGCharacter *character = (TGCharacter *)node;
             
-            if (arc4random()%30==0 && node != player){
-                [(TGCharacter *)node dodgeInDirection:arc4random()%2 ? TGDirectionRight : TGDirectionLeft];
+            [character update:currentTime];
+            
+            if (character != player)
+            {
+                
+                if (arc4random()%60==0){
+                    [character dodgeInDirection:arc4random()%2 ? TGDirectionRight : TGDirectionLeft];
+                }
+                
+                
+                if (arc4random()%30==0){
+                    [character.equipA triggerWithStrength:TGStrengthWeak];
+                }
+                
+                
+                if (arc4random()%40==0){
+                    if (character.equipB.isTriggered)
+                    {
+                        [character.equipB releaseTrigger];
+                    }else{
+                        [character.equipB triggerWithStrength:TGStrengthWeak];
+                    }
+                }
             }
         }
     }
@@ -129,6 +154,8 @@
 {
     TGSprite *spriteA = (TGSprite *)contact.bodyA.node;
     TGSprite *spriteB = (TGSprite *)contact.bodyB.node;
+    
+    NSLog(@"%@ hit %@", spriteA.name, spriteB.name);
     
     if ([spriteA isKindOfClass:[TGSprite class]])
         [spriteA didBeginContact:contact withSprite:spriteB];

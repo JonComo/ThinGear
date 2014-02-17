@@ -18,6 +18,7 @@
 		864BE40F18B1AD70006E7ADD /* TGWeapon.m in Sources */ = {isa = PBXBuildFile; fileRef = 864BE40E18B1AD70006E7ADD /* TGWeapon.m */; };
 		864BE41518B1B0B8006E7ADD /* TGShield.m in Sources */ = {isa = PBXBuildFile; fileRef = 864BE41418B1B0B8006E7ADD /* TGShield.m */; };
 		864BE41718B1B157006E7ADD /* shield.png in Resources */ = {isa = PBXBuildFile; fileRef = 864BE41618B1B157006E7ADD /* shield.png */; };
+		864BE41A18B1C200006E7ADD /* shieldClang.wav in Resources */ = {isa = PBXBuildFile; fileRef = 864BE41918B1C200006E7ADD /* shieldClang.wav */; };
 		868A1AAB18AB62ED003A16BA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 868A1AAA18AB62ED003A16BA /* Foundation.framework */; };
 		868A1AAD18AB62ED003A16BA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 868A1AAC18AB62ED003A16BA /* CoreGraphics.framework */; };
 		868A1AAF18AB62ED003A16BA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 868A1AAE18AB62ED003A16BA /* UIKit.framework */; };
@@ -68,6 +69,7 @@
 		864BE41418B1B0B8006E7ADD /* TGShield.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGShield.m; sourceTree = "<group>"; };
 		864BE41618B1B157006E7ADD /* shield.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shield.png; sourceTree = "<group>"; };
 		864BE41818B1B980006E7ADD /* TGDepths.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TGDepths.h; sourceTree = "<group>"; };
+		864BE41918B1C200006E7ADD /* shieldClang.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = shieldClang.wav; sourceTree = "<group>"; };
 		868A1AA718AB62ED003A16BA /* ThinGear.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ThinGear.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		868A1AAA18AB62ED003A16BA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		868A1AAC18AB62ED003A16BA /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -129,21 +131,21 @@
 		864BE40018B1538A006E7ADD /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				864BE41818B1B980006E7ADD /* TGDepths.h */,
 				864BE40518B18EE5006E7ADD /* TGSprite.h */,
 				864BE40618B18EE5006E7ADD /* TGSprite.m */,
+				864BE40A18B1A6A7006E7ADD /* TGAction.h */,
+				864BE40B18B1A6A7006E7ADD /* TGAction.m */,
 				86338E7618AB650700ADEF08 /* TGButton.h */,
 				86338E7718AB650700ADEF08 /* TGButton.m */,
 				86338E7918AB68F400ADEF08 /* TGCharacter.h */,
 				86338E7A18AB68F400ADEF08 /* TGCharacter.m */,
-				864BE40A18B1A6A7006E7ADD /* TGAction.h */,
-				864BE40B18B1A6A7006E7ADD /* TGAction.m */,
 				864BE40218B1541B006E7ADD /* TGEquip.h */,
 				864BE40318B1541B006E7ADD /* TGEquip.m */,
 				864BE40D18B1AD70006E7ADD /* TGWeapon.h */,
 				864BE40E18B1AD70006E7ADD /* TGWeapon.m */,
 				864BE41318B1B0B8006E7ADD /* TGShield.h */,
 				864BE41418B1B0B8006E7ADD /* TGShield.m */,
-				864BE41818B1B980006E7ADD /* TGDepths.h */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -236,6 +238,7 @@
 		86AA425918ACA4C900DFB268 /* media */ = {
 			isa = PBXGroup;
 			children = (
+				864BE41918B1C200006E7ADD /* shieldClang.wav */,
 				864BE41618B1B157006E7ADD /* shield.png */,
 				864BE40818B1A511006E7ADD /* sword.png */,
 				864BE3FD18B1495A006E7ADD /* hit.wav */,
@@ -327,6 +330,7 @@
 				868A1ACA18AB62ED003A16BA /* Images.xcassets in Resources */,
 				864BE40918B1A511006E7ADD /* sword.png in Resources */,
 				86AA425C18ACA4C900DFB268 /* player.png in Resources */,
+				864BE41A18B1C200006E7ADD /* shieldClang.wav in Resources */,
 				86AA425F18ACA75200DFB268 /* playerRoll.png in Resources */,
 				864BE41718B1B157006E7ADD /* shield.png in Resources */,
 				868A1AC018AB62ED003A16BA /* Main.storyboard in Resources */,

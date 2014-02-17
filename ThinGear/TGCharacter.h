@@ -12,11 +12,11 @@ typedef enum
     TGDirectionLeft
 } TGDirection;
 
-typedef enum : uint8_t {
-    TGColliderTypeCharacter     = 1,
-    TGColliderTypeGround        = 2,
-    TGColliderTypeWeapon        = 4
-} TGColliderType;
+static const uint32_t TGColliderTypeNone        = 0x1 << 0;
+static const uint32_t TGColliderTypeNoCollide   = 0x1 << 1;
+static const uint32_t TGColliderTypeCharacter   = 0x1 << 2;
+static const uint32_t TGColliderTypeGround      = 0x1 << 3;
+static const uint32_t TGColliderTypeWeapon      = 0x1 << 4;
 
 #import "TGSprite.h"
 #import "TGEquip.h"

@@ -15,4 +15,9 @@
     return [SKAction playSoundFileNamed:@"hit.wav" waitForCompletion:NO];
 }
 
++(SKAction *)shieldHitSound
+{
+    return [SKAction playSoundFileNamed:@"shieldClang.wav" waitForCompletion:NO];
+}
+
 @end

@@ -21,7 +21,7 @@ typedef enum
 
 @property BOOL isTriggered;
 @property BOOL isResetting;
-@property BOOL isCollidable;
+@property (nonatomic, assign) BOOL isCollidable;
 
 @property CGPoint centerOffset;
 

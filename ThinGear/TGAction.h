@@ -11,5 +11,6 @@
 @interface TGAction : SKAction
 
 +(SKAction *)bodyHitSound;
++(SKAction *)shieldHitSound;
 
 @end

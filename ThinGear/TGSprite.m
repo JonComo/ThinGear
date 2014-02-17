@@ -20,12 +20,17 @@
     
 }
 
--(void)didBeginContact:(SKPhysicsContact *)contact withSprite:(SKSpriteNode *)sprite
+-(void)didBeginContact:(SKPhysicsContact *)contact withSprite:(TGSprite *)sprite
 {
     
 }
 
 -(void)didEndContact:(SKPhysicsContact *)contact
+{
+    
+}
+
+-(void)playCollisionSound
 {
     
 }

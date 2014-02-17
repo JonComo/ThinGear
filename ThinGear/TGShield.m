@@ -27,7 +27,7 @@
     if (self.isTriggered) return;
     self.isTriggered = YES;
     
-    float offset = self.character.facing == TGDirectionRight ? 35 : -35;
+    float offset = self.character.facing == TGDirectionRight ? 45 : -45;
     
     SKAction *block = [SKAction moveBy:CGVectorMake(offset, 0) duration:0.12];
     
@@ -56,7 +56,14 @@
 
 -(void)didBeginContact:(SKPhysicsContact *)contact withSprite:(SKSpriteNode *)sprite
 {
-    if (!self.isCollidable) return; //has to be collidable
+    if (!self.isCollidable) return;
+    
+    [self playCollisionSound];
+}
+
+-(void)playCollisionSound
+{
+    [self runAction:[TGAction shieldHitSound]];
 }
 
 @end

@@ -13,7 +13,9 @@
 -(void)update:(NSTimeInterval)currentTime;
 -(void)didSimulatePhysics;
 
--(void)didBeginContact:(SKPhysicsContact *)contact withSprite:(SKSpriteNode *)sprite;
+-(void)playCollisionSound;
+
+-(void)didBeginContact:(SKPhysicsContact *)contact withSprite:(TGSprite *)sprite;
 -(void)didEndContact:(SKPhysicsContact *)contact;
 
 @end
