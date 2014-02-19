@@ -13,10 +13,6 @@
 #import "TGDepths.h"
 
 @implementation TGWeapon
-{
-    NSTimer *timerDoubleTap;
-    BOOL shouldDoubleTap;
-}
 
 +(TGWeapon *)sword
 {
@@ -25,11 +21,6 @@
     sword.zPosition = TGDepthWeapon;
     
     return sword;
-}
-
--(void)resetDoubleTap
-{
-    shouldDoubleTap = NO;
 }
 
 -(void)triggerWithStrength:(TGStrength)strength

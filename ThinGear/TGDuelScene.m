@@ -106,13 +106,19 @@
 {
     for (SKSpriteNode *node in self.children)
     {
+        if ([node isKindOfClass:[TGSprite class]])
+        {
+            node.color = [UIColor clearColor];
+            node.colorBlendFactor = 1;
+        }
+        
         if ([node isKindOfClass:[TGCharacter class]])
         {
             TGCharacter *character = (TGCharacter *)node;
             
             [character update:currentTime];
             
-            if (character != player)
+            if (character != player && 2==3)
             {
                 
                 if (arc4random()%60==0){
@@ -154,6 +160,19 @@
 {
     TGSprite *spriteA = (TGSprite *)contact.bodyA.node;
     TGSprite *spriteB = (TGSprite *)contact.bodyB.node;
+    
+    if ([spriteA isKindOfClass:[TGSprite class]])
+    {
+        spriteA.colorBlendFactor = 1;
+        spriteA.color = [UIColor redColor];
+    }
+    
+    if ([spriteB isKindOfClass:[TGSprite class]])
+    {
+        spriteB.colorBlendFactor = 1;
+        spriteB.color = [UIColor redColor];
+
+    }
     
     NSLog(@"%@ hit %@", spriteA.name, spriteB.name);
     
